@@ -1,5 +1,10 @@
 package attornatus.teste.javajr.domain.dto;
 
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
@@ -9,6 +14,8 @@ public class PersonPost {
     @NotEmpty
     private String name;
     @NotEmpty
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_birth", nullable = false)
     private Date birthDate;
     @NotEmpty
     private Long cityId;

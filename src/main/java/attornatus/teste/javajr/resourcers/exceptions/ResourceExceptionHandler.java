@@ -1,6 +1,7 @@
 package attornatus.teste.javajr.resourcers.exceptions;
 
 import attornatus.teste.javajr.service.exceptions.AddressException;
+import attornatus.teste.javajr.service.exceptions.HttpMessageNotReadableException;
 import attornatus.teste.javajr.service.exceptions.ObjectNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,12 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> customError(AddressException e, HttpServletRequest request){
         StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<StandardError> customErrorHttp(org.springframework.http.converter.HttpMessageNotReadableException e, HttpServletRequest request){
+        StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), "Error: format birhdate = yyyy-mm-dd", LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

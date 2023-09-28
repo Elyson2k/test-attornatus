@@ -9,6 +9,7 @@ import attornatus.teste.javajr.domain.entities.Person;
 import attornatus.teste.javajr.repository.AddressRepository;
 import attornatus.teste.javajr.repository.PersonRepository;
 import attornatus.teste.javajr.service.exceptions.AddressException;
+import attornatus.teste.javajr.service.exceptions.HttpMessageNotReadableException;
 import attornatus.teste.javajr.service.exceptions.ObjectNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
@@ -35,11 +36,15 @@ public class PersonService {
 
 
     public Person createPerson(PersonPost person){
-        logger.info("** SERVICE :: Updating person and change dto to entity. **");
         Person personAtt = fromDto(person);
-        personRepository.save(personAtt);
-        addressRepository.saveAll(personAtt.getAdresses());
-        return personAtt;
+        try {
+            logger.info("** SERVICE :: Updating person and change dto to entity. **");
+            personRepository.save(personAtt);
+            addressRepository.saveAll(personAtt.getAdresses());
+            return personAtt;
+        } catch (HttpMessageNotReadableException ex){
+            throw new HttpMessageNotReadableException(ex.getMessage());
+        }
     }
 
     public Person findByPerson(Long id) {
