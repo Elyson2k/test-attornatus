@@ -1,5 +1,4 @@
-# DESAFIO BACKEND JAVA PARA ELOWARE
-
+# DESAFIO BACKEND JAVA PARA ATTORNATUS
 ## ➤ DESAFIO JAVA
 
 ### ↠ Crie uma API simples usando spring para gerenciar PESSOAS. Esta API deve permitir:
